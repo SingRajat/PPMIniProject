@@ -11,7 +11,7 @@ private:
     static int nextAccNum;  
     int AccNo;
     string AccHolderName;
-    double balance; // Keep balance private
+    double balance; 
     string password;
 
 public:
@@ -20,7 +20,7 @@ public:
         AccNo = nextAccNum++;
     }
 
-    virtual double calculateInterest() = 0; // Pure virtual function for polymorphism
+    virtual double calculateInterest() = 0; 
 
     void deposit(double amount) {
         if (amount > 0) {
@@ -47,7 +47,7 @@ public:
         }
     }
 
-    virtual void displayAccDetails() const { // Marked as virtual
+    virtual void displayAccDetails() const { 
         cout << fixed << setprecision(2);
         cout << "\n---------------------------------------\n";
         cout << "            Account Details            \n";
@@ -65,19 +65,19 @@ public:
         return AccNo;
     }
 
-protected: // Change access to protected
+protected: 
     double getBalance() const {
-        return balance; // Getter for balance
+        return balance; 
     }
 
     void addBalance(double amount) {
-        balance += amount; // Setter to modify balance directly
+        balance += amount; 
     }
 };
 
 int Account::nextAccNum = 10001;  
 
-// Derived class for Savings Account
+
 class SavingsAccount : public Account {
 private:
     double interestRate;
@@ -87,22 +87,22 @@ public:
         : Account(holderName, initBalance, pwd), interestRate(0.05) {}
 
     double calculateInterest() override {
-        double interest = getBalance() * interestRate; // Use getter for balance
-        addBalance(interest); // Add interest to balance
+        double interest = getBalance() * interestRate; 
+        addBalance(interest); 
         cout << "Interest of Rs" << interest << " added to your Savings Account." << endl;
         return interest;
     }
 
-    void displayAccDetails() const override { // Now correctly overrides
+    void displayAccDetails() const override { 
         Account::displayAccDetails();
         cout << setw(20) << "Account Type:" << setw(13) << "Savings" << endl;
         cout << setw(20) << "Interest Rate:" << setw(10) << interestRate * 100 << "%" << endl;
-        cout << setw(20) << "Overdraft Limit:" << setw(9) << "N/A" << endl; // Savings accounts do not have overdraft
+        cout << setw(20) << "Overdraft Limit:" << setw(9) << "N/A" << endl; 
         cout << "---------------------------------------\n";
     }
 };
 
-// Derived class for Current Account
+
 class CurrentAccount : public Account {
 private:
     double overdraftLimit;
@@ -112,16 +112,16 @@ public:
         : Account(holderName, initBalance, pwd), overdraftLimit(5000.0) {}
 
     double calculateInterest() override {
-        double interest = getBalance() * 0.04; // Use getter for balance
-        addBalance(interest); // Add interest to balance
+        double interest = getBalance() * 0.04; 
+        addBalance(interest); 
         cout << "Interest of Rs" << interest << " added to your Current Account." << endl;
         return interest;
     }
 
-    void displayAccDetails() const override { // Now correctly overrides
+    void displayAccDetails() const override { 
         Account::displayAccDetails();
         cout << setw(20) << "Account Type:" << setw(13) << "Current" << endl;
-        cout << setw(20) << "Interest Rate:" << setw(10) << "4.00%" << endl; // Current accounts fixed interest
+        cout << setw(20) << "Interest Rate:" << setw(10) << "4.00%" << endl; 
         cout << setw(20) << "Overdraft Limit:" << setw(9) << "Rs " << overdraftLimit << endl;
         cout << "---------------------------------------\n";
     }
@@ -133,7 +133,7 @@ public:
 
 class Bank {
 private:
-    vector<Account*> accounts; // Use pointers for polymorphism
+    vector<Account*> accounts; 
 
 public:
     void createAcc() {
@@ -176,7 +176,7 @@ public:
                 cin >> enteredPassword;
 
                 if ((*it)->authenticate(enteredPassword)) {
-                    delete *it; // Free memory
+                    delete *it; 
                     it = accounts.erase(it);
                     cout << "Account deleted successfully!" << endl;
                     return;
@@ -223,7 +223,7 @@ public:
                             } else {
                                 cout << "Enter amount to withdraw: ";
                                 cin >> amount;
-                                account->withdraw(amount, 0); // Savings account has no overdraft
+                                account->withdraw(amount, 0); 
                             }
                             break;
                         default:
